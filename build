@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# config
 srcdir="src"
 destdir="dist"
 staticdir="static"
@@ -9,7 +8,6 @@ template="src/template.html"
 rm -rf ${destdir}/
 mkdir ${destdir}/
 
-# generate html from markdown
 function generate() {
 	in=${1}
 	path=${in#$srcdir}

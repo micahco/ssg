@@ -1,5 +1,6 @@
 Micah's static site generator
-	basically a pandoc wrapper
+
+	(in less than 30 lines of bash)
 
 ---
 
@@ -11,4 +12,3 @@ Dependencies:
 ---
 
 Usage:
-	
