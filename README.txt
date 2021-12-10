@@ -1,8 +1,14 @@
 Micah's static site generator
+	basically a pandoc wrapper
+
+---
 
 Dependencies:
 - pandoc	https://pandoc.org/
-
-Dev-Dependencies:
 - inotifywait
 - httpwatcher (Python)
+
+---
+
+Usage:
+	
