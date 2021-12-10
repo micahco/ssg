@@ -13,7 +13,7 @@ mkdir ${destdir}/
 function generate() {
 	in=${1}
 	path=${in#$srcdir}
-	out="${destdir}${path}"
+	out="${destdir}${path%.*}.html"
 	dir=$(dirname ${out})
 	mkdir -p ${dir}
 	pandoc --template=${template} ${in} > ${out}
@@ -27,5 +27,5 @@ do
 	fi
 done
 
-cp -a ${staticdir}/. ${destdir}/
-echo "${destdir}/${staticdir}/"
+#cp -a ${staticdir}/. ${destdir}/
+#echo "${destdir}/${staticdir}/"
