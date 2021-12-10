@@ -27,5 +27,5 @@ do
 	fi
 done
 
-#cp -a ${staticdir}/. ${destdir}/
-#echo "${destdir}/${staticdir}/"
+cp -a ${staticdir}/. ${destdir}/
+echo "${destdir}/${staticdir}/"
