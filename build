@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# config
+srcdir="src"
+destdir="dist"
+staticdir="static"
+template="src/template.html"
+
+# clean up
+rm -rf ${destdir}/
+mkdir ${destdir}/
+
+# generate html from markdown
+function generate() {
+	in=${1}
+	file=${in##*/}
+	base=${file%.*}
+	out="${destdir}/${base}.html"
+	pandoc --template=${template} ${in} > ${out}
+	echo "${out}"
+}
+
+for i in ${srcdir}/*.md ; do
+	generate ${i}
+done
+
+# add staticdir to destdir
+cp -a ${staticdir}/. ${destdir}/
+echo "${destdir}/${staticdir}/"
