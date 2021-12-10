@@ -2,6 +2,6 @@
 title: Title
 ---
 
-# Hello World
+# Micah's Static Site Generator
 
-[GitHub](https://github.com/micahco/ssg)
+[source](https://github.com/micahco/ssg)
