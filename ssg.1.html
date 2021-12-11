@@ -1,0 +1,226 @@
+<!-- Creator     : groff version 1.22.3 -->
+<!-- CreationDate: Sat Dec 11 19:45:00 2021 -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta name="generator" content="groff -Thtml, see www.gnu.org">
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<meta name="Content-Style" content="text/css">
+<style type="text/css">
+       p       { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       pre     { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       table   { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       h1      { text-align: center }
+</style>
+<title>SSG</title>
+
+</head>
+<body>
+
+<h1 align="center">SSG</h1>
+
+<a href="#NAME">NAME</a><br>
+<a href="#SYNOPSIS">SYNOPSIS</a><br>
+<a href="#DESCRIPTION">DESCRIPTION</a><br>
+<a href="#PATHS">PATHS</a><br>
+<a href="#DEPENDENCIES">DEPENDENCIES</a><br>
+<a href="#SOURCE">SOURCE</a><br>
+
+<hr>
+
+
+<h2>NAME
+<a name="NAME"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>ssg</b>
+&mdash; static site generator</p>
+
+<h2>SYNOPSIS
+<a name="SYNOPSIS"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>ssg
+[-bd]</b></p>
+
+<h2>DESCRIPTION
+<a name="DESCRIPTION"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">A tiny (~50
+lines) script for creating websites with
+<tt>pandoc</tt>.</p>
+
+<p style="margin-left:11%; margin-top: 1em">The program
+paths (#paths) can be set by the following sequence:</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="3%">
+
+
+<p>1.</p></td>
+<td width="1%"></td>
+<td width="77%">
+
+
+<p>Using the per-project configuration file,
+<i>./.ssgrc</i></p> </td>
+<td width="8%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="3%">
+
+
+<p>2.</p></td>
+<td width="1%"></td>
+<td width="77%">
+
+
+<p>Using the per-user configuration file, <i>~/.ssg</i></p></td>
+<td width="8%">
+</td></tr>
+</table>
+
+<p style="margin-left:11%; margin-top: 1em"><b>Options <br>
+-b, --build</b></p>
+
+<p style="margin-left:22%;">Builds site</p>
+
+<p style="margin-left:11%;"><b>-d, --dev</b></p>
+
+<p style="margin-left:22%;">Builds site, starts http server
+(<tt>httpwatcher</tt>) and watch daemon (<tt>entr</tt>)</p>
+
+<p style="margin-left:11%;"><b>[default]</b></p>
+
+<p style="margin-left:22%;">Prints message.</p>
+
+<h2>PATHS
+<a name="PATHS"></a>
+</h2>
+
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="9%">
+
+
+<p style="margin-top: 1em"><tt>srcdir</tt></p></td>
+<td width="2%"></td>
+<td width="27%">
+
+
+<p style="margin-top: 1em">(default) <tt>$PWD/src</tt></p></td>
+<td width="51%">
+</td></tr>
+</table>
+
+<p style="margin-left:22%; margin-top: 1em">Input
+directory. Can contain files of valid <tt>pandoc</tt> input
+formats.</p>
+
+
+<p style="margin-left:22%; margin-top: 1em">&lt;https://pandoc.org/MANUAL.html#general-options&gt;</p>
+
+<p style="margin-left:11%;"><tt>destdir</tt></p>
+
+<p style="margin-left:22%;">(default)
+<tt>$PWD/dist</tt></p>
+
+<p style="margin-left:22%; margin-top: 1em">Output
+directory.</p>
+
+<p style="margin-left:11%;"><tt>staticdir</tt></p>
+
+<p style="margin-left:22%;">(default)
+<tt>$PWD/static</tt></p>
+
+<p style="margin-left:22%; margin-top: 1em">Static
+directory.</p>
+
+<p style="margin-left:11%;"><tt>template</tt></p>
+
+<p style="margin-left:22%;">(default)
+<tt>$PWD/template.html</tt></p>
+
+
+<p style="margin-left:22%; margin-top: 1em"><tt>pandoc&nbsp;--template</tt>
+custom template file.</p>
+
+<p style="margin-left:22%; margin-top: 1em">(hint: use
+<tt>$body$</tt> to display content)</p>
+
+
+<p style="margin-left:22%; margin-top: 1em">&lt;https://pandoc.org/MANUAL.html#templates&gt;</p>
+
+<h2>DEPENDENCIES
+<a name="DEPENDENCIES"></a>
+</h2>
+
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="1%">
+
+
+<p style="margin-top: 1em">&bull;</p></td>
+<td width="2%"></td>
+<td width="81%">
+
+
+<p style="margin-top: 1em"><tt>pandoc</tt>&mdash;
+&lt;https://pandoc.org/MANUAL.html&gt;</p> </td>
+<td width="5%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="1%">
+
+
+<p>&bull;</p></td>
+<td width="2%"></td>
+<td width="81%">
+
+
+<p><tt>entr</tt> &mdash;
+&lt;https://eradman.com/entrproject/&gt;</p> </td>
+<td width="5%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="1%">
+
+
+<p>&bull;</p></td>
+<td width="2%"></td>
+<td width="81%">
+
+
+<p><tt>httpwatcher</tt> &mdash;
+&lt;https://pypi.org/project/httpwatcher/&gt;</p> </td>
+<td width="5%">
+</td></tr>
+</table>
+
+<h2>SOURCE
+<a name="SOURCE"></a>
+</h2>
+
+
+
+<p style="margin-left:11%; margin-top: 1em">&lt;https://github.com/micahco/ssg&gt;</p>
+<hr>
+</body>
+</html>

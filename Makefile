@@ -8,3 +8,4 @@ install:
 
 man:
 	pandoc --standalone --to man ssg.1.md -o ssg.1
+	cat /usr/local/share/man/man1/ssg.1 | groff -mandoc -Thtml >ssg.1.html
