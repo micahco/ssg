@@ -1,14 +1,15 @@
-Micah's static site generator
+A tiny (<50 lines) static site generator written in bash.
 
-	(in less than 30 lines of bash)
 
 ---
 
 Dependencies:
 - pandoc	https://pandoc.org/
-- inotifywait
+
+Dev:
+- entr
 - httpwatcher (Python)
 
 ---
 
-Usage:
+Usage: WIP

@@ -1,29 +1,44 @@
 #!/bin/bash
 
+version="0.0.1"
 srcdir="src"
 destdir="dist"
 staticdir="static"
-template="src/template.html"
+template="template.html"
 
-rm -rf ${destdir}/
-mkdir ${destdir}/
-
-function generate() {
-	in=${1}
-	path=${in#$srcdir}
-	out="${destdir}${path%.*}.html"
-	dir=$(dirname ${out})
-	mkdir -p ${dir}
-	pandoc --template=${template} ${in} > ${out}
-	echo "${out}"
+main() {
+	rm -rf ${destdir}/
+	mkdir ${destdir}/
+	for i in $(find ${srcdir}/ -type f); do
+		generate ${i}
+	done
+	cp -a ${staticdir}/. ${destdir}/
+	echo "build complete"
 }
 
-for i in $(find ${srcdir}/ -type f)
-do
-	if [[ ${i} != ${template} ]]; then
-		generate ${i}
-	fi
-done
+generate() {
+	in=${1}
+	path=${in#$srcdir}
+	base=${path%.*}
+	out="${destdir}${base}.html"
+	mkdir -p $(dirname ${out})
+	pandoc --template=${template} ${in} > ${out}
+}
 
-cp -a ${staticdir}/. ${destdir}/
-echo "${destdir}/${staticdir}/"
+dev() {
+	trap "trap - SIGTERM && kill -- -$$" SIGINT SIGTERM EXIT
+
+	httpwatcher --root ${destdir} --port 8000 --no-browser &
+
+	while sleep 0.1; do
+		find ${srcdir} ${staticdir} | entr -d ./build
+	done
+}
+
+if [[ ${1} == "--dev" ]]; then
+	main && dev
+elif [[ ${1} == "--version" ]]; then
+	echo "${version}"
+else
+	main
+fi
