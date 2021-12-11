@@ -1,0 +1,53 @@
+#!/bin/bash
+
+VERSION="0.1"
+SRCDIR="${PWD}/src"
+DESTDIR="${PWD}/dist"
+STATICDIR="${PWD}/static"
+TEMPLATE="${PWD}/template.html"
+
+userconfig="${HOME}/.ssgrc"
+projectconfig=".ssg"
+if test -f "${projectconfig}"; then
+	. ${projectconfig}
+elif test -f "${userconfig}"; then
+    . ${userconfig}
+fi
+
+# check paths
+
+main() {
+	rm -rf ${DESTDIR}/
+	mkdir ${DESTDIR}/
+	for i in $(find ${SRCDIR}/ -type f); do
+		generateHTML ${i}
+	done
+	cp -a ${STATICDIR}/. ${DESTDIR}/
+	echo "build complete"
+}
+
+generateHTML() {
+	in=${1}
+	path=${in#$SRCDIR}
+	base=${path%.*}
+	out="${DESTDIR}${base}.html"
+	mkdir -p $(dirname ${out})
+	pandoc --standalone --template=${TEMPLATE} --to=html5 ${in} > ${out}
+}
+
+dev() {
+	trap "trap - SIGTERM && kill -- -$$" SIGINT SIGTERM EXIT
+	httpwatcher --root ${DESTDIR} --port 8000 --no-browser &
+	while sleep 0.1; do
+		find ${SRCDIR} ${STATICDIR} | entr -dp ${0} --build
+	done
+}
+
+if [[ ${1} == "-b" || ${1} == "--build" ]]; then
+	main
+elif [[ ${1} == "-d" || ${1} == "--dev" ]]; then
+	main && dev
+else
+	echo "release: ${VERSION}"
+	echo "usage: ssg [-bd]"
+fi

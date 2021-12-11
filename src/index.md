@@ -1,9 +1,5 @@
----
-title: Title
----
+**ssg** — static site generator
 
-# Micah's Static Site Generator
-
-Usage:
+[man page](/ssg.1.html)
 
 [source](https://github.com/micahco/ssg)

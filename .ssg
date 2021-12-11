@@ -1,0 +1,6 @@
+#!/bin/bash
+
+SRCDIR="${PWD}/src"
+DESTDIR="${PWD}/dist"
+STATICDIR="${PWD}/static"
+TEMPLATE="${PWD}/template.html"
