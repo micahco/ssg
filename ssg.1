@@ -11,12 +11,6 @@
 .SH DESCRIPTION
 .PP
 A tiny (~50 lines) script for creating websites with \f[C]pandoc\f[].
-.PP
-The program paths (##paths) can be set by the following sequence:
-.IP "1." 3
-Using the per\-project configuration file, \f[I]\&./.ssgrc\f[]
-.IP "2." 3
-Using the per\-user configuration file, \f[I]~/.ssg\f[]
 .SS Options
 .TP
 .B \-b, \-\-build
@@ -34,9 +28,12 @@ Builds site, starts http server (\f[C]httpwatcher\f[]) and watch daemon
 Prints message.
 .RS
 .RE
-.SS Paths
+.SS CONFIGURATION
+.PP
+The build paths can be set in the configuration file:
+\f[I]$PWD/.ssg\f[].
 .TP
-.B \f[C]srcdir\f[]
+.B \f[C]SRCDIR\f[]
 (default) \f[C]$PWD/src\f[]
 .RS
 .PP
@@ -46,14 +43,14 @@ Can contain files of valid \f[C]pandoc\f[] input formats.
 <https://pandoc.org/MANUAL.html#general-options>
 .RE
 .TP
-.B \f[C]destdir\f[]
+.B \f[C]DESTDIR\f[]
 (default) \f[C]$PWD/dist\f[]
 .RS
 .PP
 Path to output directory.
 .RE
 .TP
-.B \f[C]staticdir\f[]
+.B \f[C]STATICDIR\f[]
 (default) \f[C]$PWD/static\f[]
 .RS
 .PP
@@ -61,7 +58,7 @@ Path to static directory.
 This directory\[aq]s contents will be copied to the \f[C]destdir\f[].
 .RE
 .TP
-.B \f[C]template\f[]
+.B \f[C]TEMPLATE\f[]
 (default) \f[C]$PWD/template.html\f[]
 .RS
 .PP
@@ -69,10 +66,3 @@ Path to \f[C]pandoc\ \-\-template\f[] html file.
 .PP
 <https://pandoc.org/MANUAL.html#templates>
 .RE
-.SS DEPENDENCIES
-.IP \[bu] 2
-\f[C]pandoc\f[]\[em] <https://pandoc.org/MANUAL.html>
-.IP \[bu] 2
-\f[C]entr\f[] \[em] <https://eradman.com/entrproject/>
-.IP \[bu] 2
-\f[C]httpwatcher\f[] \[em] <https://pypi.org/project/httpwatcher/>

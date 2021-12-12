@@ -4,11 +4,6 @@
 <p><strong>ssg [-bd]</strong></p>
 <h1 id="description">DESCRIPTION</h1>
 <p>A tiny (~50 lines) script for creating websites with <code>pandoc</code>.</p>
-<p>The program <a href="##paths">paths</a> can be set by the following sequence:</p>
-<ol style="list-style-type: decimal">
-<li>Using the per-project configuration file, <em>./.ssgrc</em></li>
-<li>Using the per-user configuration file, <em>~/.ssg</em></li>
-</ol>
 <h2 id="options">Options</h2>
 <dl>
 <dt>-b, --build</dt>
@@ -21,30 +16,25 @@
 <dd><p>Prints message.</p>
 </dd>
 </dl>
-<h2 id="paths">Paths</h2>
+<h2 id="configuration">CONFIGURATION</h2>
+<p>The build paths can be set in the configuration file: <em>$PWD/.ssg</em>.</p>
 <dl>
-<dt><code>srcdir</code></dt>
+<dt><code>SRCDIR</code></dt>
 <dd><p>(default) <code>$PWD/src</code></p>
 <p>Path to input directory. Can contain files of valid <code>pandoc</code> input formats.</p>
 <p><a href="https://pandoc.org/MANUAL.html#general-options" class="uri">https://pandoc.org/MANUAL.html#general-options</a></p>
 </dd>
-<dt><code>destdir</code></dt>
+<dt><code>DESTDIR</code></dt>
 <dd><p>(default) <code>$PWD/dist</code></p>
 <p>Path to output directory.</p>
 </dd>
-<dt><code>staticdir</code></dt>
+<dt><code>STATICDIR</code></dt>
 <dd><p>(default) <code>$PWD/static</code></p>
 <p>Path to static directory. This directory's contents will be copied to the <code>destdir</code>.</p>
 </dd>
-<dt><code>template</code></dt>
+<dt><code>TEMPLATE</code></dt>
 <dd><p>(default) <code>$PWD/template.html</code></p>
 <p>Path to <code>pandoc --template</code> html file.</p>
 <p><a href="https://pandoc.org/MANUAL.html#templates" class="uri">https://pandoc.org/MANUAL.html#templates</a></p>
 </dd>
 </dl>
-<h2 id="dependencies">DEPENDENCIES</h2>
-<ul>
-<li><code>pandoc</code>— <a href="https://pandoc.org/MANUAL.html" class="uri">https://pandoc.org/MANUAL.html</a></li>
-<li><code>entr</code> — <a href="https://eradman.com/entrproject/" class="uri">https://eradman.com/entrproject/</a></li>
-<li><code>httpwatcher</code> — <a href="https://pypi.org/project/httpwatcher/" class="uri">https://pypi.org/project/httpwatcher/</a></li>
-</ul>
