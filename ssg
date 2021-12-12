@@ -37,6 +37,10 @@ blog() {
 		rm ${index}
 	fi
 	touch ${index}
+	echo "---" >> ${index}
+	echo "title: ${BLOGTITLE}" >> ${index}
+	echo "---" >> ${index}
+	echo "" >> ${index}
 	echo "# ${BLOGTITLE}" >> ${index}
 	for f in ${BLOGDIR}/*.md; do
 		if [ "${f}" == ${index} ]; then
