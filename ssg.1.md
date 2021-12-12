@@ -1,4 +1,4 @@
-% SSG(1) Version 0.1 | Manual
+% SSG(1) Version 0.2 | Manual
 
 # NAME
 
@@ -6,7 +6,7 @@
 
 # SYNOPSIS
 
-**ssg [-bd]**
+**ssg [-bld]**
 
 # DESCRIPTION
 
@@ -16,17 +16,23 @@ A tiny script for creating websites with `pandoc`.
 
 **-b**	Builds site.
 
-**-d**	Builds site; starts http server (`httpwatcher`) and watch daemon (`entr`).
+**-l**	Indexes the `BLOGDIR` and creates `$BLOGDIR/index.md`.
+
+**-d**	Starts http server (`httpwatcher`) and watch daemon (`entr`).
+
+		Builds site on file change in `SRCDIR` and `STATICDIR`.
 
 ## CONFIGURATION
 
-The build paths can be set in the configuration file: `$PWD/.ssg`.
+The build variables can be set in the configuration file: `./ssg.conf`.
+
+**Note**: do not add trailing `/` to paths.
 
 Configuration variables:
 
 `SRCDIR`
 
-:	default: `$PWD/src`
+:	default: `./src`
 	
 	Path to input directory. Can contain files of valid `pandoc` input formats.
 
@@ -34,20 +40,32 @@ Configuration variables:
 
 `DESTDIR`
 
-:	default: `$PWD/dist`
+:	default: `./dist`
 
 	Path to output directory.
 
 `STATICDIR`
 
-:	default: `$PWD/static`
+:	default: `./static`
 
 	Path to static directory. This directory's contents will be copied into the `DESTDIR`.
 
 `TEMPLATE`
 
-:	default: `$PWD/template.html`
+:	default: `./template.html`
 
 	Path to `pandoc --template` html file.
 	
 	<https://pandoc.org/MANUAL.html#templates>
+
+`BLOGDIR`
+
+:	default: `./src/blog`
+
+	Path to blog entries.
+
+`BLOGTITLE`
+
+:	default: `Blog`
+
+	Header title for blog index.

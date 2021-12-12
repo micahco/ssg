@@ -1,13 +1,14 @@
 #!/bin/bash
 
-VERSION='0.1'
 SRCDIR="${PWD}/src"
-DESTDIR="${PWD}/dist"
+DESTDIR="${PWD}/dest"
 STATICDIR="${PWD}/static"
 TEMPLATE="${PWD}/template.html"
+BLOGDIR="${PWD}/src/blog/"
+BLOGTITLE="Blog"
 
 set -e
-conf="${PWD}/.ssgconfig"
+conf="${PWD}/ssg.conf"
 if [ -f ${conf} ]; then
 	. ${conf}
 fi
@@ -15,20 +16,39 @@ fi
 build() {
 	rm -rf ${DESTDIR}/
 	mkdir ${DESTDIR}/
-	for i in $(find ${SRCDIR}/ -type f,l); do
-		generateHTML ${i}
+	for f in $(find ${SRCDIR}/ -type f,l); do
+		path=${f#${SRCDIR}}
+		base=${path%.*}
+		out="${DESTDIR}${base}.html"
+		mkdir -p $(dirname ${out})
+		pandoc \
+			-standalone \
+			--template=${TEMPLATE} \
+			--to=html \
+			${f} > ${out}
 	done
 	cp -a ${STATICDIR}/. ${DESTDIR}/
 	echo "build complete"
 }
 
-generateHTML() {
-	in=${1}
-	path=${in#$SRCDIR}
-	base=${path%.*}
-	out="${DESTDIR}${base}.html"
-	mkdir -p $(dirname ${out})
-	pandoc --standalone --template=${TEMPLATE} --to=html5 ${in} > ${out}
+blog() {
+	index="${BLOGDIR}/index.md"
+	if [ -f ${index} ]; then
+		rm ${index}
+	fi
+	touch ${index}
+	echo "# ${BLOGTITLE}" >> ${index}
+	for f in ${BLOGDIR}/*.md; do
+		if [ "${f}" == ${index} ]; then
+			continue
+		fi
+		b=$(basename ${f})
+		title=${b%.md}
+		path=${f#${SRCDIR}}
+		href="${path%.md}.html"
+		echo "* [${title}](${href})" >> ${index}
+	done
+	echo "index blog"
 }
 
 dev() {
@@ -36,11 +56,16 @@ dev() {
 	trap "trap - SIGTERM && kill -- -$$" SIGINT SIGTERM EXIT
 	httpwatcher --root ${DESTDIR} --port 8000 --no-browser &
 	while sleep 0.1; do
-		find ${SRCDIR} ${STATICDIR} ${TEMPLATE} | entr -dp ${0} -b
+		if [ "${blog}" = true ]; then
+			cmd="${0} -bl"
+		else
+			cmd="${0} -b"
+		fi
+		find ${SRCDIR} ${STATICDIR} ${TEMPLATE} | entr -dp ${cmd}
 	done
 }
 
-error() {
+pathErr() {
 	if test -f "${conf}"; then
 		echo "config error: ${conf}"
 	fi
@@ -50,21 +75,49 @@ error() {
 
 checkPaths() {
 	if [ ! -d ${SRCDIR} ]; then
-		error ${SRCDIR}
+		pathErr ${SRCDIR}
 	elif [ ! -d ${DESTDIR} ]; then
-		error ${DESTDIR}
+		pathErr ${DESTDIR}
 	elif [ ! -d ${STATICDIR} ]; then
-		error ${STATICDIR}
+		pathErr ${STATICDIR}
+	elif [ ! -d ${BLOGDIR} ]; then
+		pathErr ${BLOGDIR}
 	elif [ ! -f ${TEMPLATE} ]; then
-		error ${TEMPLATE}
+		pathErr ${TEMPLATE}
 	fi
 }
 
-if [ "${1}" = "-b" ]; then
-	checkPaths && build
-elif [ "${1}" = "-d" ]; then
-	checkPaths && build && dev
-else
-	echo "usage: ssg [-bd]"
+usage() {
+	echo "usage: ssg [-bld]"
 	echo "help: man ssg"
+	exit 1
+}
+
+if [ $# -eq 0 ]; then
+	usage
+fi
+while getopts ":bld" arg; do
+	case "${arg}" in
+		b)
+			build=true
+			;;
+		l)
+			blog=true
+			;;
+		d)
+			dev=true
+			;;
+		*)
+			usage
+			;;
+	esac
+done
+if [ "${blog}" = true ]; then
+	blog
+fi
+if [ "${build}" = true ]; then
+	build
+fi
+if [ "${dev}" = true ]; then
+	dev
 fi
