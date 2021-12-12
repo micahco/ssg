@@ -36,7 +36,7 @@ dev() {
 	trap "trap - SIGTERM && kill -- -$$" SIGINT SIGTERM EXIT
 	httpwatcher --root ${DESTDIR} --port 8000 --no-browser &
 	while sleep 0.1; do
-		find ${SRCDIR} ${STATICDIR} ${TEMPLATE} | entr -dp ${0} --build
+		find ${SRCDIR} ${STATICDIR} ${TEMPLATE} | entr -dp ${0} -b
 	done
 }
 
