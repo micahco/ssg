@@ -10,7 +10,7 @@
 
 # DESCRIPTION
 
-A tiny (~50 lines) script for creating websites with `pandoc`.
+A tiny script for creating websites with `pandoc`.
 
 ## Options
 

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 VERSION="0.1"
 SRCDIR="${PWD}/src"
 DESTDIR="${PWD}/dist"
@@ -38,10 +40,31 @@ dev() {
 	done
 }
 
+error() {
+	if test -f "${conf}"; then
+		echo "config error: ${conf}"
+	fi
+	echo "invalid path: ${1}"
+	exit 1;
+}
+
+checkPaths() {
+	if ! test -f "${SRCDIR}"; then
+		error ${SRCDIR}
+	elif ! test -f "${DESTDIR}"; then
+		error ${DESTDIR}
+	elif ! test -f "${STATICDIR}"; then
+		error ${STATICDIR}
+	elif ! test -f "${TEMPLATE}"; then
+		error ${TEMPLATE}
+	fi
+}
+
 if [[ ${1} == "-b" || ${1} == "--build" ]]; then
-	build
+	checkPaths && build
 elif [[ ${1} == "-d" || ${1} == "--dev" ]]; then
-	build && dev
+	checkPaths && build && dev
 else
 	echo "usage: ssg [-bd]"
+	echo "help: man ssg"
 fi
