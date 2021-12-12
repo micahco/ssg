@@ -13,19 +13,19 @@
 A tiny script for creating websites with \f[C]pandoc\f[].
 .SS Options
 .PP
-\-b: Builds site.
+\f[B]\-b\f[] Builds site.
 .PP
-\-d: Builds site; starts http server (\f[C]httpwatcher\f[]) and watch
-daemon (\f[C]entr\f[]).
-.PP
-(default): Prints message.
+\f[B]\-d\f[] Builds site; starts http server (\f[C]httpwatcher\f[]) and
+watch daemon (\f[C]entr\f[]).
 .SS CONFIGURATION
 .PP
 The build paths can be set in the configuration file:
-\f[I]$PWD/.ssg\f[].
+\f[C]$PWD/.ssg\f[].
+.PP
+Configuration variables:
 .TP
 .B \f[C]SRCDIR\f[]
-(default) \f[C]$PWD/src\f[]
+default: \f[C]$PWD/src\f[]
 .RS
 .PP
 Path to input directory.
@@ -35,22 +35,22 @@ Can contain files of valid \f[C]pandoc\f[] input formats.
 .RE
 .TP
 .B \f[C]DESTDIR\f[]
-(default) \f[C]$PWD/dist\f[]
+default: \f[C]$PWD/dist\f[]
 .RS
 .PP
 Path to output directory.
 .RE
 .TP
 .B \f[C]STATICDIR\f[]
-(default) \f[C]$PWD/static\f[]
+default: \f[C]$PWD/static\f[]
 .RS
 .PP
 Path to static directory.
-This directory\[aq]s contents will be copied to the \f[C]destdir\f[].
+This directory\[aq]s contents will be copied into the \f[C]DESTDIR\f[].
 .RE
 .TP
 .B \f[C]TEMPLATE\f[]
-(default) \f[C]$PWD/template.html\f[]
+default: \f[C]$PWD/template.html\f[]
 .RS
 .PP
 Path to \f[C]pandoc\ \-\-template\f[] html file.

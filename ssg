@@ -1,13 +1,12 @@
 #!/bin/bash
 
-set -e
-
-VERSION="0.1"
+VERSION='0.1'
 SRCDIR="${PWD}/src"
 DESTDIR="${PWD}/dist"
 STATICDIR="${PWD}/static"
 TEMPLATE="${PWD}/template.html"
 
+set -e
 conf="${PWD}/.ssgconfig"
 if [ -f ${conf} ]; then
 	. ${conf}
