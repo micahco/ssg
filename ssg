@@ -9,7 +9,7 @@ STATICDIR="${PWD}/static"
 TEMPLATE="${PWD}/template.html"
 
 conf="${PWD}/.ssg"
-if test -f "${conf}"; then
+if [ -f ${conf} ]; then
 	. ${conf}
 fi
 
@@ -49,20 +49,20 @@ error() {
 }
 
 checkPaths() {
-	if ! test -f "${SRCDIR}"; then
+	if [ ! -d ${SRCDIR} ]; then
 		error ${SRCDIR}
-	elif ! test -f "${DESTDIR}"; then
+	elif [ ! -d ${DESTDIR} ]; then
 		error ${DESTDIR}
-	elif ! test -f "${STATICDIR}"; then
+	elif [ ! -d ${STATICDIR} ]; then
 		error ${STATICDIR}
-	elif ! test -f "${TEMPLATE}"; then
+	elif [ ! -f ${TEMPLATE} ]; then
 		error ${TEMPLATE}
 	fi
 }
 
-if [[ ${1} == "-b" || ${1} == "--build" ]]; then
+if [ "${1}" = "-b" ]; then
 	checkPaths && build
-elif [[ ${1} == "-d" || ${1} == "--dev" ]]; then
+elif [ "${1}" = "-d" ]; then
 	checkPaths && build && dev
 else
 	echo "usage: ssg [-bd]"

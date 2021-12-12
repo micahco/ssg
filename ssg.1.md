@@ -14,17 +14,11 @@ A tiny script for creating websites with `pandoc`.
 
 ## Options
 
--b, --build
+-b: Builds site.
 
-:	Builds site
+-d: Builds site; starts http server (`httpwatcher`) and watch daemon (`entr`).
 
--d, --dev
-
-:	Builds site, starts http server (`httpwatcher`) and watch daemon (`entr`)
-
-\[default\]
-
-:	Prints message.
+(default): Prints message.
 
 ## CONFIGURATION
 

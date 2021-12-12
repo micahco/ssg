@@ -10,24 +10,15 @@
 \f[B]ssg [\-bd]\f[]
 .SH DESCRIPTION
 .PP
-A tiny (~50 lines) script for creating websites with \f[C]pandoc\f[].
+A tiny script for creating websites with \f[C]pandoc\f[].
 .SS Options
-.TP
-.B \-b, \-\-build
-Builds site
-.RS
-.RE
-.TP
-.B \-d, \-\-dev
-Builds site, starts http server (\f[C]httpwatcher\f[]) and watch daemon
-(\f[C]entr\f[])
-.RS
-.RE
-.TP
-.B [default]
-Prints message.
-.RS
-.RE
+.PP
+\-b: Builds site.
+.PP
+\-d: Builds site; starts http server (\f[C]httpwatcher\f[]) and watch
+daemon (\f[C]entr\f[]).
+.PP
+(default): Prints message.
 .SS CONFIGURATION
 .PP
 The build paths can be set in the configuration file:
