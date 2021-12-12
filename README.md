@@ -2,12 +2,6 @@
 
 usage: **ssg [-bd]**
 
-### Options
+[configuration](.ssg)
 
-*-b, --build* — Builds site
-
-*-d, --dev* — Builds site, starts http server (`httpwatcher`) and watch daemon (`entr`)
-
-[Configuration](.ssg)
-
-[Manual](ssg.1.md)
+[man page](ssg.1.md)
