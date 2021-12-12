@@ -5,7 +5,7 @@ DESTDIR="${PWD}/dest"
 STATICDIR="${PWD}/static"
 TEMPLATE="${PWD}/template.html"
 BLOGDIR="${PWD}/src/blog/"
-BLOGTITLE="Blog"
+BLOGTITLE="# Blog"
 
 set -e
 conf="${PWD}/ssg.conf"
@@ -41,7 +41,7 @@ blog() {
 	echo "title: ${BLOGTITLE}" >> ${index}
 	echo "---" >> ${index}
 	echo "" >> ${index}
-	echo "# ${BLOGTITLE}" >> ${index}
+	echo "${BLOGTITLE}" >> ${index}
 	for f in ${BLOGDIR}/*.md; do
 		if [ "${f}" == ${index} ]; then
 			continue

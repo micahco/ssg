@@ -66,6 +66,6 @@ Configuration variables:
 
 `BLOGTITLE`
 
-:	default: `Blog`
+:	default: `# Blog`
 
-	Header title for blog index.
+	Title of blog index. Markdown format.
