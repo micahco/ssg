@@ -1,27 +1,18 @@
 % SSG(1) Version 0.1 | Manual
 
-NAME
-====
+# NAME
 
 **ssg** — static site generator
 
-SYNOPSIS
-========
+# SYNOPSIS
 
 **ssg [-bd]**
 
-DESCRIPTION
-===========
+# DESCRIPTION
 
 A tiny (~50 lines) script for creating websites with `pandoc`.
 
-The program [paths](#paths) can be set by the following sequence:
-
- 1. Using the per-project configuration file, *./.ssgrc*
- 2. Using the per-user configuration file, *~/.ssg*
-
-Options
--------
+## Options
 
 -b, --build
 
@@ -35,42 +26,35 @@ Options
 
 :	Prints message.
 
-PATHS
-=====
+## CONFIGURATION
 
-`srcdir`
+The build paths can be set in the configuration file: *$PWD/.ssg*.
+
+`SRCDIR`
 
 :	(default) `$PWD/src`
 	
-	Input directory. Can contain files of valid `pandoc` input formats.
+	Path to input directory. Can contain files of valid `pandoc` input formats.
 
 	<https://pandoc.org/MANUAL.html#general-options>
 
-`destdir`
+`DESTDIR`
 
 :	(default) `$PWD/dist`
 
-	Output directory.
+	Path to output directory.
 
-`staticdir`
+`STATICDIR`
 
 :	(default) `$PWD/static`
 
-	Static directory.
+	Path to static directory. This directory's contents 
+	will be copied to the `destdir`.
 
-`template`
+`TEMPLATE`
 
 :	(default) `$PWD/template.html`
 
-	`pandoc --template` custom template file.
+	Path to `pandoc --template` html file.
 	
-	(hint: use `$body$` to display content)
-
 	<https://pandoc.org/MANUAL.html#templates>
-
-DEPENDENCIES
-===========
-
-* `pandoc`— <https://pandoc.org/MANUAL.html>
-* `entr` — <https://eradman.com/entrproject/>
-* `httpwatcher` — <https://pypi.org/project/httpwatcher/>

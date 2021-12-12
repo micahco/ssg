@@ -6,20 +6,15 @@ DESTDIR="${PWD}/dist"
 STATICDIR="${PWD}/static"
 TEMPLATE="${PWD}/template.html"
 
-userconfig="${HOME}/.ssgrc"
-projectconfig=".ssg"
-if test -f "${projectconfig}"; then
-	. ${projectconfig}
-elif test -f "${userconfig}"; then
-    . ${userconfig}
+conf="${PWD}/.ssg"
+if test -f "${conf}"; then
+	. ${conf}
 fi
 
-# check paths
-
-main() {
+build() {
 	rm -rf ${DESTDIR}/
 	mkdir ${DESTDIR}/
-	for i in $(find ${SRCDIR}/ -type f); do
+	for i in $(find ${SRCDIR}/ -type f,l); do
 		generateHTML ${i}
 	done
 	cp -a ${STATICDIR}/. ${DESTDIR}/
@@ -39,15 +34,14 @@ dev() {
 	trap "trap - SIGTERM && kill -- -$$" SIGINT SIGTERM EXIT
 	httpwatcher --root ${DESTDIR} --port 8000 --no-browser &
 	while sleep 0.1; do
-		find ${SRCDIR} ${STATICDIR} | entr -dp ${0} --build
+		find ${SRCDIR} ${STATICDIR} ${TEMPLATE} | entr -dp ${0} --build
 	done
 }
 
 if [[ ${1} == "-b" || ${1} == "--build" ]]; then
-	main
+	build
 elif [[ ${1} == "-d" || ${1} == "--dev" ]]; then
-	main && dev
+	build && dev
 else
-	echo "release: ${VERSION}"
 	echo "usage: ssg [-bd]"
 fi
