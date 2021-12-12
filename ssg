@@ -8,7 +8,7 @@ DESTDIR="${PWD}/dist"
 STATICDIR="${PWD}/static"
 TEMPLATE="${PWD}/template.html"
 
-conf="${PWD}/.ssg"
+conf="${PWD}/.ssgconfig"
 if [ -f ${conf} ]; then
 	. ${conf}
 fi
