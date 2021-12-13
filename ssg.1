@@ -34,9 +34,10 @@ Builds site on file change in \f[C]SRCDIR\f[] \f[C]STATICDIR\f[].
 A valid configuration file \f[C]\&./ssg.conf\f[] is required to run the
 program.
 .PP
-\f[B]Note\f[]: do not add trailing \f[C]/\f[] to paths.
+\f[C]BLOG*\f[] vars are only required if running with
+\f[B]\f[C]\-l\f[]\f[].
 .PP
-Configuration variables:
+\f[B]Note\f[]: Do not add trailing \f[C]/\f[] to paths.
 .TP
 .B \f[C]SRCDIR\f[]
 Path to input directory.
@@ -64,14 +65,24 @@ Path to \f[C]pandoc\ \-\-template\f[] html file.
 <https://pandoc.org/MANUAL.html#templates>
 .RE
 .TP
-.B \f[C]BLOGDIR\f[] (optional)
+.B \f[C]BLOGDIR\f[]
 Path to blog entries.
 Should be inside the \f[C]SRCDIR\f[]
 .RS
 .RE
 .TP
-.B \f[C]BLOGTITLE\f[] (optional)
+.B \f[C]BLOGTITLE\f[]
 Title of blog index.
 Can include Markdown heading symbol(s) \f[C]#\f[]
 .RS
 .RE
+.SS Examples
+.PP
+Build a basic website: \f[C]ssg\ \-b\f[]
+.PP
+Index the blog directory: \f[C]ssg\ \-l\f[]
+.PP
+Run dev server and build with blog indexing: \f[C]ssg\ \-bld\f[]
+.PP
+An example configuration file:
+<https://raw.githubusercontent.com/micahco/ssg/main/ssg.conf>

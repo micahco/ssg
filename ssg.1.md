@@ -27,9 +27,9 @@ A tiny script for creating websites with `pandoc`.
 
 A valid configuration file `./ssg.conf` is required to run the program.
 
-**Note**: do not add trailing `/` to paths.
+`BLOG*` vars are only required if running with **`-l`**.
 
-Configuration variables:
+**Note**: Do not add trailing `/` to paths.
 
 `SRCDIR`
 
@@ -51,9 +51,20 @@ Configuration variables:
 	
 	<https://pandoc.org/MANUAL.html#templates>
 
-`BLOGDIR` (optional)
+`BLOGDIR`
 
 :	Path to blog entries. Should be inside the `SRCDIR`
 
-`BLOGTITLE` (optional)
+`BLOGTITLE`
+
 :	Title of blog index. Can include Markdown heading symbol(s) `#`
+
+## Examples
+
+Build a basic website: `ssg -b`
+
+Index the blog directory: `ssg -l`
+
+Run dev server and build with blog indexing: `ssg -bld`
+
+An example configuration file: <https://raw.githubusercontent.com/micahco/ssg/main/ssg.conf>

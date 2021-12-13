@@ -4,4 +4,3 @@ install:
 
 man:
 	pandoc --standalone --to man ssg.1.md -o ssg.1
-	pandoc ssg.1.md > ssg.1.html

@@ -51,9 +51,7 @@ blog() {
 	fi
 	touch ${index}
 	title=$(echo ${BLOGTITLE} | sed -e 's/#//g' -e 's/ *$//g')
-	echo "---" >> ${index}
-	echo "title: ${title}" >> ${index}
-	echo "---" >> ${index}
+	echo "% ${title}" >> ${index}
 	echo "" >> ${index}
 	echo "${BLOGTITLE}" >> ${index}
 	find ${BLOGDIR}/*.md -print0 | xargs -0 ls -t | while read f; do
