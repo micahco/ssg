@@ -1,22 +1,32 @@
-#!/bin/bash
+#!/bin/sh
 
-SRCDIR="${PWD}/src"
-DESTDIR="${PWD}/dest"
-STATICDIR="${PWD}/static"
-TEMPLATE="${PWD}/template.html"
-BLOGDIR="${PWD}/src/blog/"
-BLOGTITLE="# Blog"
+SRCDIR=""
+DESTDIR=""
+STATICDIR=""
+TEMPLATE=""
+BLOGDIR=""
+BLOGTITLE=""
 
-set -e
-conf="${PWD}/ssg.conf"
-if [ -f ${conf} ]; then
-	. ${conf}
-fi
+buildArg=false
+blogArg=false
+devArg=false
 
 build() {
+	if [ ! -d ${SRCDIR} ]; then
+		configPathErr ${SRCDIR}
+	elif [ ! -d ${DESTDIR} ]; then
+		configPathErr ${DESTDIR}
+	elif [ ! -d ${STATICDIR} ]; then
+		configPathErr ${STATICDIR}
+	elif [ ! -f ${TEMPLATE} ]; then
+		configPathErr ${TEMPLATE}
+	fi
 	rm -rf ${DESTDIR}/
 	mkdir ${DESTDIR}/
 	for f in $(find ${SRCDIR}/ -type f,l); do
+		if [ "${f}" = ${TEMPLATE} ]; then
+			continue
+		fi
 		path=${f#${SRCDIR}}
 		base=${path%.*}
 		out="${DESTDIR}${base}.html"
@@ -32,35 +42,37 @@ build() {
 }
 
 blog() {
+	if [ ! -d ${BLOGDIR} ]; then
+		pathErr ${BLOGDIR}
+	fi
 	index="${BLOGDIR}/index.md"
 	if [ -f ${index} ]; then
 		rm ${index}
 	fi
 	touch ${index}
+	title=$(echo ${BLOGTITLE} | sed -e 's/#//g' -e 's/ *$//g')
 	echo "---" >> ${index}
-	echo "title: ${BLOGTITLE}" >> ${index}
+	echo "title: ${title}" >> ${index}
 	echo "---" >> ${index}
 	echo "" >> ${index}
 	echo "${BLOGTITLE}" >> ${index}
-	for f in ${BLOGDIR}/*.md; do
-		if [ "${f}" == ${index} ]; then
+	find ${BLOGDIR}/*.md -print0 | xargs -0 ls -t | while read f; do
+		if [ "${f}" = ${index} ]; then
 			continue
 		fi
-		b=$(basename ${f})
-		title=${b%.md}
-		path=${f#${SRCDIR}}
-		href="${path%.md}.html"
-		echo "* [${title}](${href})" >> ${index}
+		base=${f%.md}
+		bd="${BLOGDIR}/"
+		echo "* [${base#${bd}}](${base#${SRCDIR}}.html)" >> ${index}
 	done
-	echo "index blog"
+	echo "indexed blog"
 }
 
 dev() {
 	set +e
-	trap "trap - SIGTERM && kill -- -$$" SIGINT SIGTERM EXIT
 	httpwatcher --root ${DESTDIR} --port 8000 --no-browser &
+	trap 'kill ${!}; exit 1' INT QUIT TERM
 	while sleep 0.1; do
-		if [ "${blog}" = true ]; then
+		if [ "${blogArg}" = true ]; then
 			cmd="${0} -bl"
 		else
 			cmd="${0} -b"
@@ -69,59 +81,52 @@ dev() {
 	done
 }
 
-pathErr() {
-	if test -f "${conf}"; then
-		echo "config error: ${conf}"
-	fi
+configPathErr() {
+	echo "config error: ${conf}"
 	echo "invalid path: ${1}"
 	exit 1;
 }
 
-checkPaths() {
-	if [ ! -d ${SRCDIR} ]; then
-		pathErr ${SRCDIR}
-	elif [ ! -d ${DESTDIR} ]; then
-		pathErr ${DESTDIR}
-	elif [ ! -d ${STATICDIR} ]; then
-		pathErr ${STATICDIR}
-	elif [ ! -d ${BLOGDIR} ]; then
-		pathErr ${BLOGDIR}
-	elif [ ! -f ${TEMPLATE} ]; then
-		pathErr ${TEMPLATE}
-	fi
-}
-
-usage() {
+usageMsg() {
 	echo "usage: ssg [-bld]"
 	echo "help: man ssg"
 	exit 1
 }
 
+set -eu
+conf="${PWD}/ssg.conf"
+if [ -f ${conf} ]; then
+	. ${conf}
+else
+	echo "missing: ${conf}"
+	echo ""
+	usageMsg
+fi
 if [ $# -eq 0 ]; then
-	usage
+	usageMsg
 fi
 while getopts ":bld" arg; do
 	case "${arg}" in
 		b)
-			build=true
+			buildArg=true
 			;;
 		l)
-			blog=true
+			blogArg=true
 			;;
 		d)
-			dev=true
+			devArg=true
 			;;
 		*)
-			usage
+			usageMsg
 			;;
 	esac
 done
-if [ "${blog}" = true ]; then
+if [ "${blogArg}" = true ]; then
 	blog
 fi
-if [ "${build}" = true ]; then
+if [ "${buildArg}" = true ]; then
 	build
 fi
-if [ "${dev}" = true ]; then
+if [ "${devArg}" = true ]; then
 	dev
 fi

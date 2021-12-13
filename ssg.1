@@ -12,73 +12,66 @@
 .PP
 A tiny script for creating websites with \f[C]pandoc\f[].
 .SS Options
-.PP
-\f[B]\-b\f[] Builds site.
-.PP
-\f[B]\-l\f[] Indexes the \f[C]BLOGDIR\f[] and creates
-\f[C]$BLOGDIR/index.md\f[].
-.PP
-\f[B]\-d\f[] Starts http server (\f[C]httpwatcher\f[]) and watch daemon
+.TP
+.B \f[B]\f[C]\-b\f[]\f[]
+Builds site.
+.RS
+.RE
+.TP
+.B \f[B]\f[C]\-l\f[]\f[]
+Indexes the \f[C]BLOGDIR\f[] and creates \f[C]$BLOGDIR/index.md\f[].
+.RS
+.RE
+.TP
+.B \f[B]\f[C]\-d\f[]\f[]
+Starts http server (\f[C]httpwatcher\f[]) and watch daemon
 (\f[C]entr\f[]).
-.IP
-.nf
-\f[C]
-\ \ \ \ Builds\ site\ on\ file\ change\ in\ `SRCDIR`\ and\ `STATICDIR`.
-\f[]
-.fi
+Builds site on file change in \f[C]SRCDIR\f[] \f[C]STATICDIR\f[].
+.RS
+.RE
 .SS CONFIGURATION
 .PP
-The build variables can be set in the configuration file:
-\f[C]\&./ssg.conf\f[].
+A valid configuration file \f[C]\&./ssg.conf\f[] is required to run the
+program.
 .PP
 \f[B]Note\f[]: do not add trailing \f[C]/\f[] to paths.
 .PP
 Configuration variables:
 .TP
 .B \f[C]SRCDIR\f[]
-default: \f[C]\&./src\f[]
-.RS
-.PP
 Path to input directory.
 Can contain files of valid \f[C]pandoc\f[] input formats.
+.RS
 .PP
 <https://pandoc.org/MANUAL.html#general-options>
 .RE
 .TP
 .B \f[C]DESTDIR\f[]
-default: \f[C]\&./dist\f[]
-.RS
-.PP
 Path to output directory.
+.RS
 .RE
 .TP
 .B \f[C]STATICDIR\f[]
-default: \f[C]\&./static\f[]
-.RS
-.PP
 Path to static directory.
 This directory\[aq]s contents will be copied into the \f[C]DESTDIR\f[].
+.RS
 .RE
 .TP
 .B \f[C]TEMPLATE\f[]
-default: \f[C]\&./template.html\f[]
-.RS
-.PP
 Path to \f[C]pandoc\ \-\-template\f[] html file.
+.RS
 .PP
 <https://pandoc.org/MANUAL.html#templates>
 .RE
 .TP
-.B \f[C]BLOGDIR\f[]
-default: \f[C]\&./src/blog\f[]
-.RS
-.PP
+.B \f[C]BLOGDIR\f[] (optional)
 Path to blog entries.
+Should be inside the \f[C]SRCDIR\f[]
+.RS
 .RE
 .TP
-.B \f[C]BLOGTITLE\f[]
-default: \f[C]Blog\f[]
+.B \f[C]BLOGTITLE\f[] (optional)
+Title of blog index.
+Can include Markdown heading symbol(s) \f[C]#\f[]
 .RS
-.PP
-Header title for blog index.
 .RE
