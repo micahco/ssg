@@ -44,6 +44,4 @@ A valid configuration file `./ssg.conf` is required to build run **-b**.
 
 ## Examples
 
-Build site: `ssg -b`
-
 An example configuration file: <https://raw.githubusercontent.com/micahco/ssg/main/ssg.conf>
