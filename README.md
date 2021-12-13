@@ -1,6 +1,6 @@
 ## ssg — static site generator
 
-usage: **ssg [-bd]**
+usage: **ssg [-b]**
 
 [configuration](.ssg)
 
