@@ -14,7 +14,7 @@ A tiny script for creating websites with `pandoc`.
 
 ## Options
 
-**`-b`**:	Builds site.
+**`-b`**:	Build site
 
 ## CONFIGURATION
 
