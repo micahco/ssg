@@ -1,4 +1,4 @@
-% SSG(1) Version 0.2 | Manual
+% SSG(1) Version 0.1 | Manual
 
 # NAME
 
@@ -6,7 +6,7 @@
 
 # SYNOPSIS
 
-**ssg [-bld]**
+**ssg [-b]**
 
 # DESCRIPTION
 
@@ -14,20 +14,11 @@ A tiny script for creating websites with `pandoc`.
 
 ## Options
 
-**`-b`**
-:	Builds site.
-
-**`-l`**
-:	Indexes the `BLOGDIR` and creates `$BLOGDIR/index.md`.
-
-**`-d`**
-:	Starts http server (`httpwatcher`) and watch daemon (`entr`). Builds site on file change in `SRCDIR` `STATICDIR`.
+**`-b`**:	Builds site.
 
 ## CONFIGURATION
 
-A valid configuration file `./ssg.conf` is required to run the program.
-
-`BLOG*` vars are only required if running with **`-l`**.
+A valid configuration file `./ssg.conf` is required to build run **-b**.
 
 **Note**: Do not add trailing `/` to paths.
 
@@ -51,20 +42,8 @@ A valid configuration file `./ssg.conf` is required to run the program.
 	
 	<https://pandoc.org/MANUAL.html#templates>
 
-`BLOGDIR`
-
-:	Path to blog entries. Should be inside the `SRCDIR`
-
-`BLOGTITLE`
-
-:	Title of blog index. Can include Markdown heading symbol(s) `#`
-
 ## Examples
 
-Build a basic website: `ssg -b`
-
-Index the blog directory: `ssg -l`
-
-Run dev server and build with blog indexing: `ssg -bld`
+Build site: `ssg -b`
 
 An example configuration file: <https://raw.githubusercontent.com/micahco/ssg/main/ssg.conf>

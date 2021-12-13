@@ -4,23 +4,8 @@ SRCDIR=""
 DESTDIR=""
 STATICDIR=""
 TEMPLATE=""
-BLOGDIR=""
-BLOGTITLE=""
-
-buildArg=false
-blogArg=false
-devArg=false
 
 build() {
-	if [ ! -d ${SRCDIR} ]; then
-		configPathErr ${SRCDIR}
-	elif [ ! -d ${DESTDIR} ]; then
-		configPathErr ${DESTDIR}
-	elif [ ! -d ${STATICDIR} ]; then
-		configPathErr ${STATICDIR}
-	elif [ ! -f ${TEMPLATE} ]; then
-		configPathErr ${TEMPLATE}
-	fi
 	rm -rf ${DESTDIR}/
 	mkdir ${DESTDIR}/
 	for f in $(find ${SRCDIR}/ -type f,l); do
@@ -41,44 +26,6 @@ build() {
 	echo "build complete"
 }
 
-blog() {
-	if [ ! -d ${BLOGDIR} ]; then
-		pathErr ${BLOGDIR}
-	fi
-	index="${BLOGDIR}/index.md"
-	if [ -f ${index} ]; then
-		rm ${index}
-	fi
-	touch ${index}
-	title=$(echo ${BLOGTITLE} | sed -e 's/#//g' -e 's/ *$//g')
-	echo "% ${title}" >> ${index}
-	echo "" >> ${index}
-	echo "${BLOGTITLE}" >> ${index}
-	find ${BLOGDIR}/*.md -print0 | xargs -0 ls -t | while read f; do
-		if [ "${f}" = ${index} ]; then
-			continue
-		fi
-		base=${f%.md}
-		bd="${BLOGDIR}/"
-		echo "* [${base#${bd}}](${base#${SRCDIR}}.html)" >> ${index}
-	done
-	echo "indexed blog"
-}
-
-dev() {
-	set +e
-	httpwatcher --root ${DESTDIR} --port 8000 --no-browser &
-	trap 'kill ${!}; exit 1' INT QUIT TERM
-	while sleep 0.1; do
-		if [ "${blogArg}" = true ]; then
-			cmd="${0} -bl"
-		else
-			cmd="${0} -b"
-		fi
-		find ${SRCDIR} ${STATICDIR} ${TEMPLATE} | entr -dp ${cmd}
-	done
-}
-
 configPathErr() {
 	echo "config error: ${conf}"
 	echo "invalid path: ${1}"
@@ -86,7 +33,7 @@ configPathErr() {
 }
 
 usageMsg() {
-	echo "usage: ssg [-bld]"
+	echo "usage: ssg [-b]"
 	echo "help: man ssg"
 	exit 1
 }
@@ -103,28 +50,17 @@ fi
 if [ $# -eq 0 ]; then
 	usageMsg
 fi
-while getopts ":bld" arg; do
-	case "${arg}" in
-		b)
-			buildArg=true
-			;;
-		l)
-			blogArg=true
-			;;
-		d)
-			devArg=true
-			;;
-		*)
-			usageMsg
-			;;
-	esac
-done
-if [ "${blogArg}" = true ]; then
-	blog
-fi
-if [ "${buildArg}" = true ]; then
+if [ $1 = "-b" ]; then
+	if [ ! -d ${SRCDIR} ]; then
+		configPathErr ${SRCDIR}
+	elif [ ! -d ${DESTDIR} ]; then
+		configPathErr ${DESTDIR}
+	elif [ ! -d ${STATICDIR} ]; then
+		configPathErr ${STATICDIR}
+	elif [ ! -f ${TEMPLATE} ]; then
+		configPathErr ${TEMPLATE}
+	fi
 	build
-fi
-if [ "${devArg}" = true ]; then
-	dev
+else
+	usageMsg
 fi
