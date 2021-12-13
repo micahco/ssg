@@ -1,0 +1,14 @@
+#!/bin/sh
+
+conf="${PWD}/ssg.conf"
+if [ -f ${conf} ]; then
+	. ${conf}
+else
+	echo "missing: ${conf}"
+	exit 1
+fi
+
+find ${DESTDIR} | entr -rz ruby -run -ehttpd ${DESTDIR} -p8000 &
+while sleep 0.1; do
+	find ${SRCDIR} ${STATICDIR} -type f | entr -d ssg -b
+done
