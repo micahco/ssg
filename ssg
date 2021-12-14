@@ -26,9 +26,16 @@ build() {
 	echo "build complete"
 }
 
+noConfig() {
+	echo "no config: ${conf}"
+	echo "help: man ssg"
+	exit 1
+}
+
 configPathErr() {
 	echo "config error: ${conf}"
 	echo "invalid path: ${1}"
+	echo "help: man ssg"
 	exit 1;
 }
 
@@ -43,14 +50,12 @@ conf="${PWD}/ssg.conf"
 if [ -f ${conf} ]; then
 	. ${conf}
 else
-	echo "missing: ${conf}"
-	echo ""
-	usageMsg
+	noConfig
 fi
 if [ $# -eq 0 ]; then
 	usageMsg
 fi
-if [ $1 = "-b" ]; then
+if [ ${1} = "-b" ]; then
 	if [ ! -d ${SRCDIR} ]; then
 		configPathErr ${SRCDIR}
 	elif [ ! -d ${DESTDIR} ]; then

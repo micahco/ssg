@@ -2,6 +2,4 @@
 
 usage: **ssg [-b]**
 
-[configuration](.ssg)
-
-[man page](ssg.1.md)
+[man page](https://micahcowell.com/projects/ssg.1.md)

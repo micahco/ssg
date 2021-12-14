@@ -18,7 +18,7 @@ A tiny script for creating websites with `pandoc`.
 
 ## CONFIGURATION
 
-A valid configuration file `./ssg.conf` is required to build run **-b**.
+A valid configuration file `./ssg.conf` is required to build.
 
 **Note**: Do not add trailing `/` to paths.
 
@@ -41,7 +41,3 @@ A valid configuration file `./ssg.conf` is required to build run **-b**.
 :	Path to `pandoc --template` html file.
 	
 	<https://pandoc.org/MANUAL.html#templates>
-
-## Examples
-
-An example configuration file: <https://raw.githubusercontent.com/micahco/ssg/main/ssg.conf>
