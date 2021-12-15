@@ -17,6 +17,7 @@ build() {
 		out="${DESTDIR}${base}.html"
 		mkdir -p $(dirname ${out})
 		pandoc \
+			-V date="$(date +'%B %d, %Y')" \
 			-standalone \
 			--template=${TEMPLATE} \
 			--to=html \
@@ -26,29 +27,50 @@ build() {
 	echo "build complete"
 }
 
-noConfig() {
-	echo "no config: ${conf}"
-	echo "help: man ssg"
-	exit 1
-}
-
-configPathErr() {
-	echo "config error: ${conf}"
-	echo "invalid path: ${1}"
-	echo "help: man ssg"
-	exit 1;
-}
-
 usageMsg() {
 	echo "usage: ssg [-b]"
 	echo "help: man ssg"
 	exit 1
 }
 
+noConfig() {
+	echo "no config: ${conf}"
+	echo "help: man ssg"
+	exit 1
+}
+
+configErr() {
+	echo "config error: ${conf}"
+	echo "${1}"
+	echo "help: man ssg"
+	exit 1;
+}
+
+checkConfig() {
+	if [ -z ${SRCDIR} ]; then
+		configErr "missing var: SRCDIR"
+	elif [ -z ${DESTDIR} ]; then
+		configErr "missing var: DESTDIR"
+	elif [ -z ${STATICDIR} ]; then
+		configErr "missing var: STATICDIR"
+	elif [ -z ${TEMPLATE} ]; then
+		configErr "missing var: TEMPLATE"
+	elif [ ! -d ${SRCDIR} ]; then
+		configErr "invalid path: ${SRCDIR}"
+	elif [ ! -d ${DESTDIR} ]; then
+		configErr "invalid path: ${DESTDIR}"
+	elif [ ! -d ${STATICDIR} ]; then
+		configErr "invalid path: ${STATICDIR}"
+	elif [ ! -f ${TEMPLATE} ]; then
+		configErr "invalid path: ${TEMPLATE}"
+	fi
+}
+
 set -eu
 conf="${PWD}/ssg.conf"
 if [ -f ${conf} ]; then
 	. ${conf}
+	checkConfig
 else
 	noConfig
 fi
@@ -56,15 +78,6 @@ if [ $# -eq 0 ]; then
 	usageMsg
 fi
 if [ ${1} = "-b" ]; then
-	if [ ! -d ${SRCDIR} ]; then
-		configPathErr ${SRCDIR}
-	elif [ ! -d ${DESTDIR} ]; then
-		configPathErr ${DESTDIR}
-	elif [ ! -d ${STATICDIR} ]; then
-		configPathErr ${STATICDIR}
-	elif [ ! -f ${TEMPLATE} ]; then
-		configPathErr ${TEMPLATE}
-	fi
 	build
 else
 	usageMsg
