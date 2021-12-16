@@ -33,36 +33,33 @@ usageMsg() {
 	exit 1
 }
 
-noConfig() {
-	echo "no config: ${conf}"
-	echo "help: man ssg"
-	exit 1
-}
-
-configErr() {
-	echo "config error: ${conf}"
-	echo "${1}"
+error() {
+	echo "error: ${1}"
+	shift
+	for msg in "$@"; do
+		echo "${msg}"
+	done
 	echo "help: man ssg"
 	exit 1;
 }
 
 checkConfig() {
-	if [ -z ${SRCDIR} ]; then
-		configErr "missing var: SRCDIR"
-	elif [ -z ${DESTDIR} ]; then
-		configErr "missing var: DESTDIR"
-	elif [ -z ${STATICDIR} ]; then
-		configErr "missing var: STATICDIR"
-	elif [ -z ${TEMPLATE} ]; then
-		configErr "missing var: TEMPLATE"
+	if [ -z "${SRCDIR}" ]; then
+		error "missing SRCDIR in config" ${conf}
+	elif [ -z "${DESTDIR}" ]; then
+		error "missing DESTDIR in config" ${conf}
+	elif [ -z "${STATICDIR}" ]; then
+		error "missing STATICDIR in config" ${conf}
+	elif [ -z "${TEMPLATE}" ]; then
+		error "missing TEMPLATE in config" ${conf}
 	elif [ ! -d ${SRCDIR} ]; then
-		configErr "invalid path: ${SRCDIR}"
+		error "directory not found '${SRCDIR}'" ${conf}
 	elif [ ! -d ${DESTDIR} ]; then
-		configErr "invalid path: ${DESTDIR}"
+		error "directory not found '${DESTDIR}'" ${conf}
 	elif [ ! -d ${STATICDIR} ]; then
-		configErr "invalid path: ${STATICDIR}"
+		error "directory not found '${STATICDIR}'" ${conf}
 	elif [ ! -f ${TEMPLATE} ]; then
-		configErr "invalid path: ${TEMPLATE}"
+		error "file not found '${TEMPLATE}'" ${conf}
 	fi
 }
 
@@ -72,7 +69,7 @@ if [ -f ${conf} ]; then
 	. ${conf}
 	checkConfig
 else
-	noConfig
+	error "config file not found '${conf}'"
 fi
 if [ $# -eq 0 ]; then
 	usageMsg
