@@ -71,9 +71,6 @@ if [ -f ${conf} ]; then
 else
 	error "config file not found '${conf}'"
 fi
-if [ $# -eq 0 ]; then
-	usageMsg
-fi
 if [ ${1} = "-b" ]; then
 	build
 else
