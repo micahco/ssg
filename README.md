@@ -2,7 +2,7 @@
 
 Install:
 
-    go install ./cmd/ssg
+    go install github.com/micahco/ssg/cmd/ssg@latest
 
 Usage:
 

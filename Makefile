@@ -3,7 +3,7 @@ include .env
 all: $(patsubst $(SOURCE_DIR)/%, $(BUILD_DIR)/%, $(shell find $(SOURCE_DIR) -type f))
 
 $(BUILD_DIR)/%.html: $(SOURCE_DIR)/%.html $(BASE_TEMPLATE)
-	@echo "ssg $<"
+	@echo "$<"
 	@mkdir -p $(dir $@)
 	@ls $(BASE_TEMPLATE) $< | ssg > $@
 

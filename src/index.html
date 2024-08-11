@@ -1,26 +1,21 @@
 {{define "title"}}ssg{{end}}
 {{define "body"}}
-    <h1>
-        ssg
-    </h1>
+    <h1>ssg</h1>
     <p>
         A small CLI tool based on <a href="https://pkg.go.dev/html/template"><code>html/template</code></a>.
     </p>
-    <h2>
-        Usage
-    </h2>
-    <code>
-        ssg < filenames
-    </code>
+
+    <h2>Install</h2>
+    <code>go install github.com/micahco/ssg/cmd/ssg@latest</code>
+
+    <h2>Usage</h2>
+    <code>ssg < filenames</code>
     <p>
         Example:
     </p>
-    <code>
-        ls base.html in.html | ssg > out.html
-    </code>
-    <h2>
-        Build System
-    </h2>
+    <code>ls base.html in.html | ssg > out.html</code>
+
+    <h2>Build System</h2>
     <p>
         Automated builds with
         <a href="https://www.gnu.org/software/make/manual/make.html"><code>make</code></a>
